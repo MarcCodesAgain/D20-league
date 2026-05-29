@@ -180,6 +180,11 @@
       .tab-btn { padding: 9px 16px; font-size: .85rem; }
       thead th, tbody td { padding: 9px 8px; font-size: .82rem; }
     }
+    @media (max-width: 480px) {
+      table { min-width: 0; }
+      .round-col { display: none; }
+      #tab-jornada .total-col { display: none; }
+    }
   </style>
 </head>
 <body>
@@ -266,7 +271,7 @@
       <thead><tr>
         <th>#</th>
         <th>Jugador</th>
-        ${activeRounds.map(r => `<th>J${r}</th>`).join('')}
+        ${activeRounds.map(r => `<th class="round-col">J${r}</th>`).join('')}
         <th>Total</th>
       </tr></thead>
       <tbody>`;
@@ -274,8 +279,8 @@
     sorted.forEach((p, i) => {
       const cells = activeRounds.map(r => {
         const v = p.rounds[r - 1];
-        if (v === null) return `<td class="pts-null">–</td>`;
-        return `<td class="${v === 0 ? 'pts-zero' : 'pts-pos'}">${v}</td>`;
+        if (v === null) return `<td class="round-col pts-null">–</td>`;
+        return `<td class="round-col ${v === 0 ? 'pts-zero' : 'pts-pos'}">${v}</td>`;
       }).join('');
       html += `<tr>
         <td>${rankLabel(i)}</td>
@@ -331,7 +336,7 @@
         <th>#</th>
         <th>Jugador</th>
         <th>Puntos J${currentRound}</th>
-        <th>Total acumulado</th>
+        <th class="total-col">Total acumulado</th>
       </tr></thead>
       <tbody>`;
 
@@ -341,7 +346,7 @@
         <td>${rankLabel(i)}</td>
         <td>${p.name}</td>
         <td class="${v === 0 ? 'pts-zero' : 'pts-pos'}">${v}</td>
-        <td class="pts-total">${p.total}</td>
+        <td class="pts-total total-col">${p.total}</td>
       </tr>`;
     });
 
